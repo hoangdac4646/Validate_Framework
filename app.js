@@ -11,10 +11,12 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(bodyParser.json());
+
+app.set('views', "./views");
 app.set('view engine', 'ejs');
 
 app.get('/', function (req, res) {
-    res.send('Hello World!')
+    res.render('home')
 })
 
 app.use((req, res, next) => {
