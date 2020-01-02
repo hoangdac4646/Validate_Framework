@@ -1,3 +1,10 @@
+FacadeValidator._instance = null;
+FacadeValidator.getInstance = function () {  
+    if (FacadeValidator._instance == null)
+        FacadeValidator._instance = new FacadeValidator();
+    return FacadeValidator._instance;
+}
+
 class FacadeValidator {
     constructor() {
         initValidatorFactory();
