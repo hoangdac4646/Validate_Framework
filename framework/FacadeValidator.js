@@ -85,26 +85,31 @@ class StringLengthValidator {
     }
 }
 
-class MinLenghtValadator{
-    constructor(){}
-
+var MinLenghtValadator= {
     check(stringNeedToBeValidated, minValue){
         return stringNeedToBeValidated.length >= minValue;
-    }
+    },
 
     getErrorMessage(){
         return "";
     }
 }
 
-class MaxLenghtValadator{
-    constructor(){}
+var MaxLenghtValadator = {
 
     check(stringNeedToBeValidated, maxValue){
         return stringNeedToBeValidated.length <= maxValue;
-    }
+    },
 
     getErrorMessage(){
         return "";
     }
 }
+
+var EmailValidator = {
+    check(stringNeedToBeValidated){
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(stringNeedToBeValidated.toLowerCase());
+    },
+}
+
