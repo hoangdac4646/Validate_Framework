@@ -60,7 +60,7 @@ class FacadeValidator {
     }
 }
 
-class LenValidator {
+class StringLengthValidator {
     constructor() {
 
     }
@@ -73,14 +73,38 @@ class LenValidator {
         var childValidator = null;
         for (var i = 0; i < listKeyWord.length; i++) {
             switch (listKeyWord[i]) {
-                case "min": childValidator = new MinValadator();
-                case "max": childValidator = new MaxValadator();
+                case "min": childValidator = new MinLenghtValadator();
+                case "max": childValidator = new MaxLenghtValadator();
             }
             if (childValidator){
                 if (!childValidator.check(stringNeedToBeValidated, rule[listKeyWord[i]]));
                     return childValidator.getErrorMessage();
             }
         }
+        return "";
+    }
+}
+
+class MinLenghtValadator{
+    constructor(){}
+
+    check(stringNeedToBeValidated, minValue){
+        return stringNeedToBeValidated.length >= minValue;
+    }
+
+    getErrorMessage(){
+        return "";
+    }
+}
+
+class MaxLenghtValadator{
+    constructor(){}
+
+    check(stringNeedToBeValidated, maxValue){
+        return stringNeedToBeValidated.length <= maxValue;
+    }
+
+    getErrorMessage(){
         return "";
     }
 }
