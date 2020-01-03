@@ -15,10 +15,14 @@ class FacadeValidator {
         this.arrInvalid = [];
         $.each(rules, function (tagName, value) {
             var result = this.validateInputWithRule(tagName, value);
+            console.log("[validate] result " + result);
             if (result != null)
-                this.arrInvalid.push(result);
-        });
-        console.log("Result = " + JSON.stringify(this.arrInvalid));
+                {
+                    this.arrInvalid.push(result);
+                    console.log("Result = " + JSON.stringify(this.arrInvalid));            
+                }
+        }.bind(this));
+        // console.log("Result = " + JSON.stringify(this.arrInvalid));
     }
 
     showMessage(){
@@ -33,11 +37,14 @@ class FacadeValidator {
      * @param {*} strType : "len"
      */
     getValidatorByType(strType) {
+        return new StringLengthValidator();
         return this.validatorFactory.create(strType);
     }
 
-    getInputByName(name) {
-        return Document.getElementByName(name).text;
+    getInputByName(name) {  
+        var res = $("input[name=\'" + name + "\']").val();
+        console.log("[getInputByName] tagName, res: " + name + " " + res);
+        return res;
     }
 
     /**
@@ -46,18 +53,19 @@ class FacadeValidator {
      * @param {*} rules: {len: {min: 10, max: 20}, isEmail: true};
      */
     validateInputWithRule(tagName, rules) {
-        console.log("[validateInputWithRule]" + tagName);
-        return  null;
+        var mess = "";
         $.each(rules, function (strTag, subRule) {
-            var arrInvalid = []; // {tagName, message}
-            var validator = getValidatorByType(strTag);
+            var validator = this.getValidatorByType(strTag);
             if (validator) {
-                var mess = "";
                 var stringNeedToBeValidated = this.getInputByName(tagName); //"SetName"
                 mess = validator.check(stringNeedToBeValidated, subRule);
-                return { tagName: tagName, message: mess };
+                console.log("[validateInputWithRule] mess return " + mess);
+                if (mess != "")
+                    return false;
             }
-        });
+        }.bind(this));
+        if (mess != "")
+            return { tagName: tagName, message: mess };
         return null;
     }
 }
@@ -74,12 +82,15 @@ class StringLengthValidator {
         var listKeyWord = Object.keys(rule);
         var childValidator = null;
         for (var i = 0; i < listKeyWord.length; i++) {
+            console.log("[check with key option] " + listKeyWord[i]);
             switch (listKeyWord[i]) {
-                case "min": childValidator = new MinLenghtValadator();
-                case "max": childValidator = new MaxLenghtValadator();
+                case "min": childValidator = MinLenghtValadator;
+                break;
+                case "max": childValidator = MaxLenghtValadator;
+                break;
             }
             if (childValidator){
-                if (!childValidator.check(stringNeedToBeValidated, rule[listKeyWord[i]]));
+                if (!childValidator.check(stringNeedToBeValidated, rule[listKeyWord[i]]))
                     return childValidator.getErrorMessage();
             }
         }
@@ -93,18 +104,19 @@ var MinLenghtValadator= {
     },
 
     getErrorMessage(){
-        return "";
+        return "String too short";
     }
 }
 
 var MaxLenghtValadator = {
 
     check(stringNeedToBeValidated, maxValue){
+        console.log("[MaxLenghtValadator] check", stringNeedToBeValidated);
         return stringNeedToBeValidated.length <= maxValue;
     },
 
     getErrorMessage(){
-        return "";
+        return "String too long";
     }
 }
 
