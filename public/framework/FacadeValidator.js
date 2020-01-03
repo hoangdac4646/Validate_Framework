@@ -14,6 +14,7 @@ class FacadeValidator {
     validate(rules) {
         this.arrInvalid = [];
         $.each(rules, function (tagName, value) {
+            console.log("[zzz] " + tagName);
             var result = this.validateInputWithRule(tagName, value);
             console.log("[validate] result " + result);
             if (result != null)
@@ -37,8 +38,12 @@ class FacadeValidator {
      * @param {*} strType : "len"
      */
     getValidatorByType(strType) {
-        return new StringLengthValidator();
-        return this.validatorFactory.create(strType);
+        // draft code
+        switch (strType){
+            case "len": return new StringLengthValidator();
+            case "email": return new EmailValidator();
+            case "equal": return new EqualValidator();
+        }
     }
 
     getInputByName(name) {  
@@ -120,12 +125,45 @@ var MaxLenghtValadator = {
     }
 }
 
-var EmailValidator = {
+class EmailValidator{
+    constructor(){
+        
+    }
+
     check(stringNeedToBeValidated){
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(stringNeedToBeValidated.toLowerCase());
-    },
+        if (!re.test(stringNeedToBeValidated.toLowerCase()))
+            return this.getErrorMessage();
+        return "";
+    }
+
+    getErrorMessage(){
+        return "Email invalid";
+    }
 }
+// var EmailValidator = {
+//     check(stringNeedToBeValidated){
+//         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+//         return re.test(stringNeedToBeValidated.toLowerCase());
+//     },
+// }
+
+class EqualValidator{
+    constructor(){
+    }
+
+    check(stringNeedToBeValidated, target){
+        if (!(stringNeedToBeValidated === target)){
+            return this.getErrorMessage();
+        }
+        return "";
+    }
+
+    getErrorMessage(){
+        return "xxxx invalid";
+    }
+}
+
 
 FacadeValidator._instance = null;
 FacadeValidator.getInstance = function () {  
