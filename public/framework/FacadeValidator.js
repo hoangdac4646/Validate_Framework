@@ -17,7 +17,7 @@ class FacadeValidator {
             var result = this.validateInputWithRule(tagName, value);
             if (result != null)
                 this.arrInvalid.push(result);
-        });
+        }.bind(this));
         console.log("Result = " + JSON.stringify(this.arrInvalid));
     }
 
