@@ -3,8 +3,6 @@ class Message {
     constructor(factory) {
         this.factory = factory;
         this.messElement = [];
-        this.add(this.factory.createText());
-        this.add(this.factory.createIcon());
     }
 
     show()
@@ -38,14 +36,15 @@ class MessageFactory{
     }
 }
 
-class ConsoleFactory extends MessageFactory{
+class ConsoleMessFactory extends MessageFactory{
     createText(info)
     {
         return new ConsoleText(info);
     }
 }
 
-class UIFactory extends MessageFactory{
+class UIMessFactory extends MessageFactory{
+
     createIcon(info)
     {
         return new UIIcon(info);
@@ -61,8 +60,8 @@ class UIFactory extends MessageFactory{
 
 class MessageElement{
     constructor(info) {
-        console.log("constructor MessageElement");
         // initValidatorFactory();
+        this.inputSelector = info.inputSelector;
     }
 
     show()
@@ -74,9 +73,9 @@ class MessageElement{
 class Icon extends MessageElement{
     constructor(info) {
         super(info);
-        this.path = info.path;
-        this.width = info.width;
-        this.height = info.height;
+        this.path = info.icon.path;
+        this.width = info.icon.width;
+        this.height = info.icon.height;
     }
 
     show()
@@ -88,7 +87,7 @@ class Icon extends MessageElement{
 class Text extends MessageElement{
     constructor(info) {
         super(info);
-        this.content = info.content;
+        this.content = info.text.content;
     }
 
     show()
@@ -104,18 +103,35 @@ class ConsoleText extends Text{
 
     show()
     {
-        console.log(this.content);
+        console.log("Input name=" + this.inputSelector.attr('id') + " - Error: " + this.content);
     }
 }
 
 class UIText extends Text{
     constructor(info) {
         super(info);
+        this.messBlock = "<div class='message' style='display: inline-block; background-color: lightgoldenrodyellow; padding: 5px'>"
     }
 
     show()
     {
-        console.log(this.content);
+        var mess = "<strong class='message-content' style='color: red'>" + this.content +
+            "</strong>";
+        var actualSelector = this.inputSelector.parent();
+        if (actualSelector) {
+            if (actualSelector.find('.message')[0]) {
+                actualSelector.find('.message')[0].remove();
+            }
+            else {
+                var outputMess = this.messBlock;
+                outputMess += mess + "</div>";
+                console.log(outputMess);
+                actualSelector.prepend(outputMess);
+            }
+        } else
+        {
+            console.log("Unvalid selector");
+        }
     }
 }
 
@@ -126,6 +142,6 @@ class UIIcon extends Icon{
 
     show()
     {
-        console.log(this.content);
+
     }
 }

@@ -84,12 +84,12 @@
       $('#main_form').submit(function (e) { 
         e.preventDefault();
         FacadeValidator.getInstance().validate({
-          name: {len: {min: 6, max: 15}}
+          name: {len: {min: 6, max: 15}},
         });
         return false;
 
        })
     </script>
-    
+  <script type="text/javascript" src="../framework/Message.js"></script>
 </body>
 </html>

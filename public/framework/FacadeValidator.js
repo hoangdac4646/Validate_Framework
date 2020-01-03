@@ -7,6 +7,8 @@ class FacadeValidator {
     constructor() {
         console.log("constructor FacadeValidator");
         // initValidatorFactory();
+        this.messFactory = new UIMessFactory();
+        this.message = new Message(this.messFactory);
     }
     /**
      * @param {*} rules: objects 
@@ -16,17 +18,33 @@ class FacadeValidator {
         $.each(rules, function (tagName, value) {
             var result = this.validateInputWithRule(tagName, value);
             console.log("[validate] result " + result);
-            if (result != null)
-                {
-                    this.arrInvalid.push(result);
-                    console.log("Result = " + JSON.stringify(this.arrInvalid));            
-                }
+            if (result != null) {
+                this.arrInvalid.push(result);
+                console.log("Result = " + JSON.stringify(this.arrInvalid));
+                this.addMessage(result);
+            }
         }.bind(this));
         // console.log("Result = " + JSON.stringify(this.arrInvalid));
+        this.showMessage();
     }
 
     showMessage(){
         //TODO: Hao code
+        this.message.show();
+        console.log("mess showed");
+    }
+
+    addMessage(info) {
+        this.message.add(this.messFactory.createText(
+            {
+                inputSelector: $("input[name=" + info.tagName + "]"),
+                text: {content: info.message}
+            }))
+        // this.message.add(this.messFactory.createText(
+        //     {
+        //         inputSelector: $("input[name=" + info.tagName + "]"),
+        //         icon: {path: info.path}
+        //     }))
     }
 
     initValidatorFactory() {
