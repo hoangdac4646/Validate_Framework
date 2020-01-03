@@ -45,7 +45,7 @@ class FacadeValidator {
      * @param {*} tagName: username
      * @param {*} rules: {len: {min: 10, max: 20}, isEmail: true};
      */
-    validateInputWithRule(tagName, rules) {
+    validateInputWithRule = function (tagName, rules) {
         console.log("[validateInputWithRule]" + tagName);
         return  null;
         $.each(rules, function (strTag, subRule) {

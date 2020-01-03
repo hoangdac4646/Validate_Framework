@@ -83,9 +83,13 @@
     <script>
       $('#main_form').submit(function (e) { 
         e.preventDefault();
-        FacadeValidator.getInstance().validate({
+        let facade = new FacadeValidator();
+        facade.MyMethod({
           name: {len: {min: 6}}
         });
+        // FacadeValidator.getInstance().validate({
+        //   name: {len: {min: 6}}
+        // });
         return false;
 
        })
