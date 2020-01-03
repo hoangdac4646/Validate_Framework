@@ -1,13 +1,12 @@
-FacadeValidator._instance = null;
-FacadeValidator.getInstance = function () {  
-    if (FacadeValidator._instance == null)
-        FacadeValidator._instance = new FacadeValidator();
-    return FacadeValidator._instance;
-}
+var script = document.createElement('script');
+script.src = 'https://code.jquery.com/jquery-3.4.1.min.js';
+script.type = 'text/javascript';
+document.getElementsByTagName('head')[0].appendChild(script);
 
 class FacadeValidator {
     constructor() {
-        initValidatorFactory();
+        console.log("constructor FacadeValidator");
+        // initValidatorFactory();
     }
     /**
      * @param {*} rules: objects 
@@ -15,10 +14,11 @@ class FacadeValidator {
     validate(rules) {
         this.arrInvalid = [];
         $.each(rules, function (tagName, value) {
-            var result = validateInputWithRule(tagName, value);
+            var result = this.validateInputWithRule(tagName, value);
             if (result != null)
                 this.arrInvalid.push(result);
         });
+        console.log("Result = " + JSON.stringify(this.arrInvalid));
     }
 
     showMessage(){
@@ -46,6 +46,8 @@ class FacadeValidator {
      * @param {*} rules: {len: {min: 10, max: 20}, isEmail: true};
      */
     validateInputWithRule(tagName, rules) {
+        console.log("[validateInputWithRule]" + tagName);
+        return  null;
         $.each(rules, function (strTag, subRule) {
             var arrInvalid = []; // {tagName, message}
             var validator = getValidatorByType(strTag);
@@ -113,3 +115,10 @@ var EmailValidator = {
     },
 }
 
+FacadeValidator._instance = null;
+FacadeValidator.getInstance = function () {  
+    console.log("xxxx get instance");
+    if (FacadeValidator._instance == null)
+        FacadeValidator._instance = new FacadeValidator();
+    return FacadeValidator._instance;
+}
