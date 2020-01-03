@@ -13,12 +13,12 @@
   <link rel="stylesheet" href="../framework/css/style.css">
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  
+
   <title>Home</title>
 </head>
 
 <body>
-  <form class="form-horizontal" id= "main_form">
+  <form class="form-horizontal" id="main_form">
     <fieldset>
 
       <!-- Form Name -->
@@ -28,7 +28,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="name">Name</label>
         <div class="col-md-4">
-          <input id="name" name="name" type="text" placeholder="Name" class="form-control input-md" value = "hao">
+          <input id="name" name="name" type="text" placeholder="Name" class="form-control input-md" value="hao">
 
         </div>
       </div>
@@ -60,8 +60,8 @@
         </div>
       </div>
 
-       <!-- Confirm Password input-->
-       <div class="form-group">
+      <!-- Confirm Password input-->
+      <div class="form-group">
         <label class="col-md-4 control-label" for="comfirmpassword">Confirm Password</label>
         <div class="col-md-4">
           <input id="comfirmpassword" name="comfirmpassword" type="password" placeholder="Confirm Password"
@@ -82,27 +82,29 @@
   </form>
 
   <script type="text/javascript" src="../framework/FacadeValidator.js"></script>
-    <script>
-      $('#main_form').submit(function (e) { 
-        e.preventDefault();
-        // FacadeValidator.getInstance().addMethod("cong", function(){return 10;},"ahiahi");
-        // console.log("Cong toan tu" + FacadeValidator.getInstance().listValidator["cong"].check());
-        FacadeValidator.getInstance().validate({
-          name: {len: {min: 6, max: 15}},
-          email: {email: true},
-                  comfirmpassword: {equal: "123"},
-
-              },
-              {
-                  /**
-                   * @param {*} errorDisplay: ['default','console','alert'}
-                   */
-                  errorDisplay: "default"
-              });
-          return false;
-
-      })
-    </script>
+  <script type="text/javascript" src="../framework/ValidatorFactory.js"></script>
   <script type="text/javascript" src="../framework/Message.js"></script>
+  <script type="text/javascript" src="../framework/lib/CommonValidator.js"></script>
+  <script type="text/javascript" src="../framework/lib/EmailValidator.js"></script>
+  <script type="text/javascript" src="../framework/lib/StringLength.js"></script>
+
+  <script>
+    $('#main_form').submit(function (e) {
+      e.preventDefault();
+      FacadeValidator.getInstance().validate({
+        name: { minLength: 6, maxLength: 15 },
+        email: { email: true },
+      },
+        {
+          /**
+           * @param {*} errorDisplay: ['default','console','alert'}
+           */
+          errorDisplay: "default"
+        });
+      return false;
+
+    })
+  </script>
 </body>
+
 </html>
