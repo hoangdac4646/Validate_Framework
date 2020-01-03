@@ -110,18 +110,30 @@ FacadeValidator.getInstance = function () {
 
 var ValidatorFactory = {
     getDefaultValidator : function(){
-        var list = {
-            len: StringLengthFactory.createValidator(),
-            email: EmailFactory.createValidator(),
-            equal: EqualFactory.createValidator()
-        }
+        var factory = null;
+        var list = {};
+        factory = new StringLengthFactory();
+        list.len = factory.getValidator();
+        factory = new EmailFactory();
+        list.email = factory.getValidator();
+        factory = new EqualFactory();
+        list.equal = factory.getValidator();
         return list;
     }
 }
 
+class IValidatorFactory{
+    constructor(){
+
+    }
+    getValidator(){
+
+    }
+}
 // ------- StringLengthFactory-----------
-var StringLengthFactory = {
-    createValidator : function(){
+class StringLengthFactory extends IValidatorFactory
+{
+    getValidator(){
         return StringLengthValidator;
     }
 }
@@ -174,11 +186,12 @@ var MaxLenghtValadator = {
 }
 
 // ------- EmailFactory-----------
-var EmailFactory = {
-    createValidator : function(){ 
+class EmailFactory extends IValidatorFactory{
+    getValidator(){
         return EmailValidator;
     }
 }
+
 var EmailValidator = {
     check : function(stringNeedToBeValidated){
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -192,13 +205,12 @@ var EmailValidator = {
     }
 }
 
-// ------- EmailFactory-----------
-var EqualFactory = {
-    createValidator : function(){
+// ------- EqualFactory-----------
+class EqualFactory{
+    getValidator(){
         return EqualValidator;
     }
 }
-
 var EqualValidator = {
     check : function(stringNeedToBeValidated, target){
         if (!(stringNeedToBeValidated === target)){
