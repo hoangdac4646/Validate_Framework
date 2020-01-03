@@ -23,11 +23,10 @@ class FacadeValidator {
             console.log("[validate] result " + result);
             if (result != null) {
                 this.arrInvalid.push(result);
-                console.log("Result = " + JSON.stringify(this.arrInvalid));
                 this.addMessage(result);
             }
         }.bind(this));
-        // console.log("Result = " + JSON.stringify(this.arrInvalid));
+        console.log("Result = " + JSON.stringify(this.arrInvalid));
         this.showMessage();
     }
 
@@ -95,7 +94,6 @@ class FacadeValidator {
 
     getInputByName(name) {  
         var res = $("input[name=\'" + name + "\']").val();
-        console.log("[getInputByName] tagName, res: " + name + " " + res);
         return res;
     }
 
@@ -105,18 +103,23 @@ class FacadeValidator {
      * @param {*} rules: {minLength: 10, maxLength: 20, email: true};
      */
     validateInputWithRule(tagName, rules) {
+        var res = true;
         var mess = "";
         $.each(rules, function (validatorType, value) {
             var validator = this.getValidatorByType(validatorType);
             if (validator) {
                 var stringNeedToBeValidated = this.getInputByName(tagName); //"SetName"
-                mess = validator.check(stringNeedToBeValidated, value);
-                console.log("[validateInputWithRule] mess return " + mess);
-                if (mess != "")
-                    return false;
+                res = validator.check(stringNeedToBeValidated, value);
+                if (!res)
+                    {
+                        mess = validator.getErrorMessage();
+                        if (typeof mess == "function")
+                            mess = mess(tagName, value);
+                        return false;
+                    }
             }
         }.bind(this));
-        if (mess != "")
+        if (!res)
             return { tagName: tagName, message: mess };
         return null;
     }
