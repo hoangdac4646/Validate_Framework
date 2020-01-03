@@ -72,16 +72,15 @@ class FacadeValidator {
     }
 
     addMessage(info) {
-        this.message.add(this.messFactory.createIcon(
-            {
-                inputSelector: $("input[name=" + info.tagName + "]"),
-                icon: {path: info.path}
-            }))
-        this.message.add(this.messFactory.createText(
-            {
-                inputSelector: $("input[name=" + info.tagName + "]"),
-                text: {content: info.message}
-            }))
+        var util = {
+            inputSelector: $("input[name=" + info.tagName + "]"),
+            icon: {path: info.path},
+            text: {content: info.message},
+        };
+
+        this.message.add(this.messFactory.createIcon(util));
+
+        this.message.add(this.messFactory.createText(util));
     }
 
     initValidatorFactory() {
@@ -227,7 +226,7 @@ var EmailValidator = {
     },
 
     getErrorMessage : function(){
-        return "Email invalid";
+        return "Invalid Email ";
     }
 }
 
@@ -245,7 +244,7 @@ var EqualValidator = {
         return "";
     },
     getErrorMessage : function(){
-        return "xxxx invalid";
+        return "Invalid xxxx ";
     },
 }
 

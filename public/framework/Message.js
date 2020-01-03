@@ -123,7 +123,7 @@ class ConsoleText extends Text{
             console.error("Input name: " + this.inputSelector.attr('name') + " - Error: " + this.content);
         } else
         {
-            console.log("Unvalid selector");
+            console.log("Invalid selector");
         }
     }
 }
@@ -150,7 +150,7 @@ class UIText extends Text{
             }
         } else
         {
-            console.log("Unvalid selector");
+            console.log("Invalid selector");
         }
     }
 }
@@ -185,7 +185,7 @@ class UIIcon extends Icon{
             }
         } else
         {
-            console.log("Unvalid selector");
+            console.log("Invalid selector");
         }
     }
 }
@@ -201,7 +201,7 @@ class AlertText extends Text{
             alert("Input name: " + this.inputSelector.attr('name') + " - Error: " + this.content)
         } else
         {
-            console.log("Unvalid selector");
+            console.log("Invalid selector");
         }
     }
 
