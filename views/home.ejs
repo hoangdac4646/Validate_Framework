@@ -51,19 +51,19 @@
 
       <!-- Password input-->
       <div class="form-group">
-        <label class="col-md-4 control-label" for="comfirmpassword">Confirm Password</label>
+        <label class="col-md-4 control-label" for="password">Password</label>
         <div class="col-md-4">
-          <input id="comfirmpassword" name="comfirmpassword" type="password" placeholder="Confirm Password"
-            class="form-control input-md">
+          <input id="password" name="password" type="password" placeholder="password" class="form-control input-md">
 
         </div>
       </div>
 
-      <!-- Password input-->
-      <div class="form-group">
-        <label class="col-md-4 control-label" for="password">Password</label>
+       <!-- Confirm Password input-->
+       <div class="form-group">
+        <label class="col-md-4 control-label" for="comfirmpassword">Confirm Password</label>
         <div class="col-md-4">
-          <input id="password" name="password" type="password" placeholder="password" class="form-control input-md">
+          <input id="comfirmpassword" name="comfirmpassword" type="password" placeholder="Confirm Password"
+            class="form-control input-md">
 
         </div>
       </div>
@@ -85,6 +85,10 @@
         e.preventDefault();
         FacadeValidator.getInstance().validate({
           name: {len: {min: 6, max: 15}},
+          email: {email: true},
+
+          comfirmpassword: {equal: "123"}
+          
         });
         return false;
 
