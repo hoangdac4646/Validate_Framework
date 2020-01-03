@@ -7,13 +7,15 @@ class FacadeValidator {
     constructor() {
         console.log("constructor FacadeValidator");
         // initValidatorFactory();
-        this.messFactory = new UIMessFactory();
         this.message = new Message(this.messFactory);
     }
+
     /**
-     * @param {*} rules: objects 
+     * @param {*} rules: objects
+     * @param options: objects
      */
-    validate(rules) {
+    validate(rules,options) {
+        this.getMessFactory(options.errorDisplay);
         this.arrInvalid = [];
         $.each(rules, function (tagName, value) {
             console.log("[zzz] " + tagName);
@@ -29,23 +31,46 @@ class FacadeValidator {
         this.showMessage();
     }
 
+    getMessFactory(messFactory)
+    {
+        if (messFactory) {
+            switch (messFactory) {
+                case "console":
+                    this.messFactory = new ConsoleMessFactory();
+                    break;
+                case "alert":
+                    this.messFactory = new AlertMessFactory();
+                    break;
+                case "default":
+                    this.messFactory = new UIMessFactory();
+                    break;
+                default:
+                    this.messFactory = new UIMessFactory();
+                    break;
+            }
+        }
+        else
+        {
+            this.messFactory = new UIMessFactory();
+        }
+    }
+
     showMessage(){
-        //TODO: Hao code
         this.message.show();
         console.log("mess showed");
     }
 
     addMessage(info) {
+        this.message.add(this.messFactory.createIcon(
+            {
+                inputSelector: $("input[name=" + info.tagName + "]"),
+                icon: {path: info.path}
+            }))
         this.message.add(this.messFactory.createText(
             {
                 inputSelector: $("input[name=" + info.tagName + "]"),
                 text: {content: info.message}
             }))
-        // this.message.add(this.messFactory.createText(
-        //     {
-        //         inputSelector: $("input[name=" + info.tagName + "]"),
-        //         icon: {path: info.path}
-        //     }))
     }
 
     initValidatorFactory() {

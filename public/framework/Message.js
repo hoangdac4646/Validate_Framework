@@ -7,10 +7,9 @@ class Message {
 
     show()
     {
-        this.messElement.forEach(function(element)
-        {
-            element.show();
-        })
+            this.messElement.forEach(function (element) {
+                element.show();
+            })
     }
 
     add(element)
@@ -27,12 +26,12 @@ class MessageFactory{
 
     createIcon(info)
     {
-
+        return new Icon(info);
     }
 
     createText(info)
     {
-
+        return new Text(info);
     }
 }
 
@@ -45,15 +44,34 @@ class ConsoleMessFactory extends MessageFactory{
 
 class UIMessFactory extends MessageFactory{
 
+    constructor()
+    {
+        super();
+    }
+
     createIcon(info)
     {
         return new UIIcon(info);
-
     }
 
     createText(info)
     {
         return new UIText(info);
+    }
+}
+
+
+class AlertMessFactory extends MessageFactory{
+
+    constructor()
+    {
+        super();
+    }
+
+
+    createText(info)
+    {
+        return new AlertText(info);
     }
 }
 
@@ -66,7 +84,7 @@ class MessageElement{
 
     show()
     {
-
+        return "";
     }
 }
 
@@ -74,8 +92,6 @@ class Icon extends MessageElement{
     constructor(info) {
         super(info);
         this.path = info.icon.path;
-        this.width = info.icon.width;
-        this.height = info.icon.height;
     }
 
     show()
@@ -103,30 +119,34 @@ class ConsoleText extends Text{
 
     show()
     {
-        console.log("Input name=" + this.inputSelector.attr('id') + " - Error: " + this.content);
+        if (this.inputSelector) {
+            console.error("Input name: " + this.inputSelector.attr('name') + " - Error: " + this.content);
+        } else
+        {
+            console.log("Unvalid selector");
+        }
     }
 }
 
 class UIText extends Text{
     constructor(info) {
         super(info);
-        this.messBlock = "<div class='message' style='display: inline-block; background-color: lightgoldenrodyellow; padding: 5px'>"
     }
 
     show()
     {
-        var mess = "<strong class='message-content' style='color: red'>" + this.content +
-            "</strong>";
         var actualSelector = this.inputSelector.parent();
         if (actualSelector) {
+            var messBlock = "<div class='message'>";
+            var mess = '<strong class="message-content">' + this.content + '</strong>';
+
             if (actualSelector.find('.message')[0]) {
-                actualSelector.find('.message')[0].remove();
+                $(actualSelector.find('.message')[0]).append(mess);
             }
             else {
-                var outputMess = this.messBlock;
+                var outputMess = messBlock;
                 outputMess += mess + "</div>";
-                console.log(outputMess);
-                actualSelector.prepend(outputMess);
+                actualSelector.append(outputMess);
             }
         } else
         {
@@ -142,6 +162,47 @@ class UIIcon extends Icon{
 
     show()
     {
+        var actualSelector = this.inputSelector.parent();
+        if (actualSelector) {
+            var messBlock = "<div class='message'>";
+            var icon;
+            if (this.path)
+            {
+                icon = "<img class='message-icon' src=" + this.path + ">";
+            }
+            else
+            {
+                icon = "<img class='message-icon' src='../framework/img/cancel.png'>";
+            }
 
+            if (actualSelector.find('.message')[0]) {
+                $(actualSelector.find('.message')[0]).append(icon);
+            }
+            else {
+                var outputMess = messBlock;
+                outputMess += icon + "</div>";
+                actualSelector.prepend(outputMess);
+            }
+        } else
+        {
+            console.log("Unvalid selector");
+        }
     }
+}
+
+class AlertText extends Text{
+    constructor(info) {
+        super(info);
+    }
+
+    show()
+    {
+        if (this.inputSelector) {
+            alert("Input name: " + this.inputSelector.attr('name') + " - Error: " + this.content)
+        } else
+        {
+            console.log("Unvalid selector");
+        }
+    }
+
 }

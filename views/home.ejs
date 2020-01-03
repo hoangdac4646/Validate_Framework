@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+  <link rel="stylesheet" href="../framework/css/style.css">
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   
   <title>Home</title>
@@ -81,18 +83,24 @@
 
   <script type="text/javascript" src="../framework/FacadeValidator.js"></script>
     <script>
-      $('#main_form').submit(function (e) { 
-        e.preventDefault();
-        FacadeValidator.getInstance().validate({
-          name: {len: {min: 6, max: 15}},
-          email: {email: true},
+      $('#main_form').submit(function (e) {
+          e.preventDefault();
+          FacadeValidator.getInstance().validate({
+                  name: {len: {min: 6, max: 15}},
+                  email: {email: true},
 
-          comfirmpassword: {equal: "123"}
-          
-        });
-        return false;
+                  comfirmpassword: {equal: "123"},
 
-       })
+              },
+              {
+                  /**
+                   * @param {*} errorDisplay: ['default','console','alert'}
+                   */
+                  errorDisplay: "alert"
+              });
+          return false;
+
+      })
     </script>
   <script type="text/javascript" src="../framework/Message.js"></script>
 </body>

@@ -1,0 +1,15 @@
+.message{
+    display: block;
+    background-color: lightgoldenrodyellow;
+    padding: 5px;
+}
+
+img.message-icon {
+    padding: 5px;
+    width: 32px;
+    height: 32px;
+}
+
+strong.message-content{
+    color: red;
+}
