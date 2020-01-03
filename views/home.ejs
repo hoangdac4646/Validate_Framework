@@ -83,12 +83,13 @@
 
   <script type="text/javascript" src="../framework/FacadeValidator.js"></script>
     <script>
-      $('#main_form').submit(function (e) {
-          e.preventDefault();
-          FacadeValidator.getInstance().validate({
-                  name: {len: {min: 6, max: 15}},
-                  email: {email: true},
-
+      $('#main_form').submit(function (e) { 
+        e.preventDefault();
+        // FacadeValidator.getInstance().addMethod("cong", function(){return 10;},"ahiahi");
+        // console.log("Cong toan tu" + FacadeValidator.getInstance().listValidator["cong"].check());
+        FacadeValidator.getInstance().validate({
+          name: {len: {min: 6, max: 15}},
+          email: {email: true},
                   comfirmpassword: {equal: "123"},
 
               },

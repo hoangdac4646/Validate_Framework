@@ -6,7 +6,9 @@ document.getElementsByTagName('head')[0].appendChild(script);
 class FacadeValidator {
     constructor() {
         console.log("constructor FacadeValidator");
-        // initValidatorFactory();
+        this.listValidator = {};
+        this.initValidatorFactory();
+        this.messFactory = new UIMessFactory();
         this.message = new Message(this.messFactory);
     }
 
@@ -18,7 +20,6 @@ class FacadeValidator {
         this.getMessFactory(options.errorDisplay);
         this.arrInvalid = [];
         $.each(rules, function (tagName, value) {
-            console.log("[zzz] " + tagName);
             var result = this.validateInputWithRule(tagName, value);
             console.log("[validate] result " + result);
             if (result != null) {
@@ -55,6 +56,16 @@ class FacadeValidator {
         }
     }
 
+    addMethod(name, func, errorMessage){
+        if (!this.listValidator[name]){
+            this.listValidator[name] = {};
+        }
+        this.listValidator[name].check = func;
+        this.listValidator[name].getErrorMessage = function(){
+            return errorMessage;
+        }
+    }
+
     showMessage(){
         this.message.show();
         console.log("mess showed");
@@ -75,18 +86,14 @@ class FacadeValidator {
 
     initValidatorFactory() {
        //TODO: Hao code
+       this.listValidator = ValidatorFactory.getDefaultValidator();
     }
 
     /**
      * @param {*} strType : "len"
      */
     getValidatorByType(strType) {
-        // draft code
-        switch (strType){
-            case "len": return new StringLengthValidator();
-            case "email": return new EmailValidator();
-            case "equal": return new EqualValidator();
-        }
+        return this.listValidator[strType];
     }
 
     getInputByName(name) {  
@@ -118,15 +125,51 @@ class FacadeValidator {
     }
 }
 
-class StringLengthValidator {
-    constructor() {
+FacadeValidator._instance = null;
+FacadeValidator.getInstance = function () {  
+    console.log("xxxx get instance");
+    if (FacadeValidator._instance == null)
+        FacadeValidator._instance = new FacadeValidator();
+    return FacadeValidator._instance;
+}
+
+
+var ValidatorFactory = {
+    getDefaultValidator : function(){
+        var factory = null;
+        var list = {};
+        factory = new StringLengthFactory();
+        list.len = factory.getValidator();
+        factory = new EmailFactory();
+        list.email = factory.getValidator();
+        factory = new EqualFactory();
+        list.equal = factory.getValidator();
+        return list;
+    }
+}
+
+class IValidatorFactory{
+    constructor(){
 
     }
-    /**
+    getValidator(){
+
+    }
+}
+// ------- StringLengthFactory-----------
+class StringLengthFactory extends IValidatorFactory
+{
+    getValidator(){
+        return StringLengthValidator;
+    }
+}
+
+var StringLengthValidator = {
+     /**
      * 
      * @param {*} rule : {min: 10, max: 20}
      */
-    check(stringNeedToBeValidated, rule) {
+    check : function(stringNeedToBeValidated, rule){
         var listKeyWord = Object.keys(rule);
         var childValidator = null;
         for (var i = 0; i < listKeyWord.length; i++) {
@@ -168,50 +211,41 @@ var MaxLenghtValadator = {
     }
 }
 
-class EmailValidator{
-    constructor(){
-        
+// ------- EmailFactory-----------
+class EmailFactory extends IValidatorFactory{
+    getValidator(){
+        return EmailValidator;
     }
+}
 
-    check(stringNeedToBeValidated){
+var EmailValidator = {
+    check : function(stringNeedToBeValidated){
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!re.test(stringNeedToBeValidated.toLowerCase()))
             return this.getErrorMessage();
         return "";
-    }
+    },
 
-    getErrorMessage(){
+    getErrorMessage : function(){
         return "Email invalid";
     }
 }
-// var EmailValidator = {
-//     check(stringNeedToBeValidated){
-//         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-//         return re.test(stringNeedToBeValidated.toLowerCase());
-//     },
-// }
 
-class EqualValidator{
-    constructor(){
+// ------- EqualFactory-----------
+class EqualFactory{
+    getValidator(){
+        return EqualValidator;
     }
-
-    check(stringNeedToBeValidated, target){
+}
+var EqualValidator = {
+    check : function(stringNeedToBeValidated, target){
         if (!(stringNeedToBeValidated === target)){
             return this.getErrorMessage();
         }
         return "";
-    }
-
-    getErrorMessage(){
+    },
+    getErrorMessage : function(){
         return "xxxx invalid";
-    }
+    },
 }
 
-
-FacadeValidator._instance = null;
-FacadeValidator.getInstance = function () {  
-    console.log("xxxx get instance");
-    if (FacadeValidator._instance == null)
-        FacadeValidator._instance = new FacadeValidator();
-    return FacadeValidator._instance;
-}
