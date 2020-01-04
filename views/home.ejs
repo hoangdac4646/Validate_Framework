@@ -89,6 +89,10 @@
   <script type="text/javascript" src="../framework/lib/StringLength.js"></script>
   <script type="text/javascript" src="../framework/lib/NumberValidator.js"></script>
   <script type="text/javascript" src="../framework/lib/Equal.js"></script>
+  <script type="text/javascript" src="../framework/lib/Url.js"></script>
+  <script type="text/javascript" src="../framework/lib/Time.js"></script>
+  <script type="text/javascript" src="../framework/lib/MacAddress.js"></script>
+  <script type="text/javascript" src="../framework/lib/IpAddress.js"></script>
 
   <script>
     $('#main_form').submit(function (e) {
@@ -110,6 +114,7 @@
       FacadeValidator.getInstance().validate({
         name: { min: 5},
         email: { email: true },
+        email: { ipAddress: true},
         username: {rangeNum: [5, 10]},
         comfirmpassword: {equal: "#password"}
       },

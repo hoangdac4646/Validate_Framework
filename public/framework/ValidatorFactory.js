@@ -12,7 +12,11 @@ class PrototypeValidatorFactory extends IValidatorFactory{
             "minLength": new MinLenghtValidator(),
             "maxLength": new MaxLenghtValidator(),
             "min": new MinValidator(),
-            "equal": new EqualValidator()
+            "equal": new EqualValidator(),
+            "url": new UrlValidator(),
+            "time": new TimeValidator(),
+            "macAddress": new MacAddressValidator(),
+            "ipAddress": new IpAddressValidator()
         }
     }
 
