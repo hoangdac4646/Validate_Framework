@@ -1,14 +1,20 @@
 class CommonValidator{
-    constructor(funcCheck, funGetMessage){
-        this.setCheckFunction(funcCheck);
-        this.setFuncGetMessage(funGetMessage);
+    constructor(checkFunc, messageFunc){
+        if (!checkFunc)
+            checkFunc = this.createCheckFunc();
+        if (!messageFunc)
+            messageFunc = this.createMessageFunc();
+        this.check = checkFunc;
+        this.getErrorMessage = messageFunc;
     }
 
-    setCheckFunction(funcCheck){
-        this.check = funcCheck || function () {};
+    //derive class should override this function
+    createCheckFunc(){
+        return function () {};
     }
 
-    setFuncGetMessage(funGetMessage){
-        this.getErrorMessage = funGetMessage || function () {};
+    //derive class should override this function
+    createMessageFunc(){
+        return function () {};
     }
 }

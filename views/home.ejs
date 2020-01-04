@@ -55,7 +55,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="password">Password</label>
         <div class="col-md-4">
-          <input id="password" name="password" type="password" placeholder="password" class="form-control input-md">
+          <input id="password" name="password" type="password" placeholder="password" class="form-control input-md" value = "123">
 
         </div>
       </div>
@@ -64,7 +64,7 @@
       <div class="form-group">
         <label class="col-md-4 control-label" for="comfirmpassword">Confirm Password</label>
         <div class="col-md-4">
-          <input id="comfirmpassword" name="comfirmpassword" type="password" placeholder="Confirm Password"
+          <input id="comfirmpassword" name="comfirmpassword" type="password" placeholder="Confirm Password" value = "123"
             class="form-control input-md">
 
         </div>
@@ -87,6 +87,8 @@
   <script type="text/javascript" src="../framework/lib/CommonValidator.js"></script>
   <script type="text/javascript" src="../framework/lib/EmailValidator.js"></script>
   <script type="text/javascript" src="../framework/lib/StringLength.js"></script>
+  <script type="text/javascript" src="../framework/lib/NumberValidator.js"></script>
+  <script type="text/javascript" src="../framework/lib/Equal.js"></script>
 
   <script>
     $('#main_form').submit(function (e) {
@@ -106,9 +108,10 @@
         }
       );
       FacadeValidator.getInstance().validate({
-        name: { minLength: 6, maxLength: 15 },
+        name: { min: 5},
         email: { email: true },
-        username: {rangeNum: [5, 10]}
+        username: {rangeNum: [5, 10]},
+        comfirmpassword: {equal: "#password"}
       },
         {
           /**

@@ -11,6 +11,8 @@ class PrototypeValidatorFactory extends IValidatorFactory{
             "email": new EmailValidator(),
             "minLength": new MinLenghtValidator(),
             "maxLength": new MaxLenghtValidator(),
+            "min": new MinValidator(),
+            "equal": new EqualValidator()
         }
     }
 
