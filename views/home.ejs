@@ -91,9 +91,24 @@
   <script>
     $('#main_form').submit(function (e) {
       e.preventDefault();
+      FacadeValidator.getInstance().addMethod(
+        "rangeNum", 
+        function (input, value) {
+          if (input != undefined && Array.isArray(value) && value.length >=2){
+            input = parseInt(input);
+            return input >= value[0] && input <= value[1];
+          }
+        },
+        function (tagName, value) { 
+            if (Array.isArray(value) && value.length >= 2)
+              return "Please enter a value between " + value[0] +" and "+ value[1];
+            return "Invalid input";
+        }
+      );
       FacadeValidator.getInstance().validate({
         name: { minLength: 6, maxLength: 15 },
         email: { email: true },
+        username: {rangeNum: [5, 10]}
       },
         {
           /**

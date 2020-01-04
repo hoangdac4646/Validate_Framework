@@ -18,8 +18,8 @@ class PrototypeValidatorFactory extends IValidatorFactory{
         return this.listValidator[key];
     }
 
-    addMethod(key, func, mess){
-        var validator = new CommonValidator(func, mess);
+    addMethod(key, funcCheck, funcGetMess){
+        var validator = new CommonValidator(funcCheck, funcGetMess);
         this.listValidator[key] = validator;
     }
 }

@@ -55,13 +55,7 @@ class FacadeValidator {
     }
 
     addMethod(name, func, errorMessage){
-        if (!this.listValidator[name]){
-            this.listValidator[name] = {};
-        }
-        this.listValidator[name].check = func;
-        this.listValidator[name].getErrorMessage = function(){
-            return errorMessage;
-        }
+       this.validatorFactory.addMethod(name, func, errorMessage);
     }
 
     showMessage(){
@@ -110,13 +104,10 @@ class FacadeValidator {
             if (validator) {
                 var stringNeedToBeValidated = this.getInputByName(tagName); //"SetName"
                 res = validator.check(stringNeedToBeValidated, value);
-                if (!res)
-                    {
-                        mess = validator.getErrorMessage();
-                        if (typeof mess == "function")
-                            mess = mess(tagName, value);
-                        return false;
-                    }
+                if (!res){
+                    mess = validator.getErrorMessage(tagName, value);
+                    return false;
+                }
             }
         }.bind(this));
         if (!res)
@@ -127,7 +118,6 @@ class FacadeValidator {
 
 FacadeValidator._instance = null;
 FacadeValidator.getInstance = function () {  
-    console.log("xxxx get instance");
     if (FacadeValidator._instance == null)
         FacadeValidator._instance = new FacadeValidator();
     return FacadeValidator._instance;

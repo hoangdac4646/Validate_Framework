@@ -1,18 +1,14 @@
 class CommonValidator{
-    constructor(func, mess){
-        this.setCheckFunction(func);
-        this.setMessage(mess);
+    constructor(funcCheck, funGetMessage){
+        this.setCheckFunction(funcCheck);
+        this.setFuncGetMessage(funGetMessage);
     }
 
-    setCheckFunction(func){
-        this.check = func || function () {};
+    setCheckFunction(funcCheck){
+        this.check = funcCheck || function () {};
     }
 
-    setMessage(mess){
-        this.message = mess || "";
-    }
-
-    getErrorMessage(){
-        return this.message;
+    setFuncGetMessage(funGetMessage){
+        this.getErrorMessage = funGetMessage || function () {};
     }
 }
