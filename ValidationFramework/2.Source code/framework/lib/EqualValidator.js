@@ -12,7 +12,7 @@ class EqualValidator extends CommonValidator{
 
     createMessageFunc(){
         return function (tagName, value) {  
-            return tagName + " must be equal to" + value;
+            return tagName + " must be equal to " + value;
         }
     }
 }

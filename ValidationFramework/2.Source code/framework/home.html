@@ -51,6 +51,30 @@
         </div>
       </div>
 
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="ipaddress">Ip Address</label>
+        <div class="col-md-4">
+          <input id="ipaddress" name="ipaddress" type="text" placeholder="Ip Address" class="form-control input-md">
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="time">Time</label>
+        <div class="col-md-4">
+          <input id="time" name="time" type="text" placeholder="hh:mm:ss" class="form-control input-md">
+
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="date">Date</label>
+        <div class="col-md-4">
+          <input id="date" name="date" type="text" placeholder="dd/mm/yyyy" class="form-control input-md">
+
+        </div>
+      </div>
+
       <!-- Password input-->
       <div class="form-group">
         <label class="col-md-4 control-label" for="password">Password</label>
@@ -91,7 +115,7 @@
     </fieldset>
   </form>
 
-  <script type="text/javascript" src="../framework/invalid_validation.min.js"></script>
+  <script type="text/javascript" src="../framework/invalid_validation.js"></script>
 
   <script>
     $('#main_form').submit(function (e) {
@@ -113,9 +137,11 @@
         FacadeValidator.getInstance().validate({
                 name: {min: 5},
                 email: {email: true},
-                email: {ipAddress: true},
+                ipaddress: {ipAddress: true},
                 url: {url: true},
                 username: {rangeNum: [5, 10]},
+                time:{time: true},
+                date: {date: true},
                 comfirmpassword: {equal: "#password"}
             },
             {

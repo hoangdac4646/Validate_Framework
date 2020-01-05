@@ -19,6 +19,7 @@ class PrototypeValidatorFactory extends IValidatorFactory{
             "maxLength": new MaxLenghtValidator(),
             "time": new TimeValidator(),
             "url": new UrlValidator(),
+            'date': new DateValidator(),
         }
     }
 

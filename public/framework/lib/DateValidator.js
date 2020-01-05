@@ -1,18 +1,18 @@
-class TimeValidator extends CommonValidator{
+class DateValidator extends CommonValidator{
     constructor(){
         super();
     }
     
     createCheckFunc(){
         return function (str) {
-            var re = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]$/;
+            var re = /^(0[1-9]|1\d|2\d|3[01])\/(0[1-9]|1[0-2])\/(19|20)\d{2}$/;
             return re.test(str);
         }
     }
 
     createMessageFunc(){
         return function (tagName, value) {  
-            return "Time is invalid! (require 00:00:00 - 23:59:59)";
+            return "Date is invalid! (require format dd/mm/yyyy)";
         }
     }
 }
