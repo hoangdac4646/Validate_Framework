@@ -12,7 +12,10 @@ class PrototypeValidatorFactory extends IValidatorFactory{
             "minLength": new MinLenghtValidator(),
             "maxLength": new MaxLenghtValidator(),
             "min": new MinValidator(),
-            "equal": new EqualValidator()
+            "equal": new EqualValidator(),
+            "number": new EqualValidator(),
+            "required": new EqualValidator(),
+            "date": new EqualValidator(),
         }
     }
 

@@ -39,3 +39,21 @@ class MaxValidator extends CommonValidator{
         }
     }
 }
+
+class IsNumberValidator extends CommonValidator{
+    constructor(){
+        super();
+    }
+
+    createCheckFunc(){
+        return function (str, value) { 
+            return /^(?:-?\d+|-?\d{1,3}(?:,\d{3})+)?(?:\.\d+)?$/.test(str);
+        }
+    }
+
+    createMessageFunc(){
+        return function (tagName, value) {  
+            return tagName + " must be a number";
+        }
+    }
+}

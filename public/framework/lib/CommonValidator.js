@@ -8,13 +8,11 @@ class CommonValidator{
         this.getErrorMessage = messageFunc;
     }
 
-    //derive class should override this function
     createCheckFunc(){
-        return function () {};
+        throw new Error('Derived class must override method createCheckFunc!');
     }
 
-    //derive class should override this function
     createMessageFunc(){
-        return function () {};
+        throw new Error('Derived class must override method createMessageFunc!');
     }
 }
