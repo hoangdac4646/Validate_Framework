@@ -70,6 +70,16 @@
         </div>
       </div>
 
+      <!-- Confirm Password input-->
+      <div class="form-group">
+        <label class="col-md-4 control-label" for="url">Url</label>
+        <div class="col-md-4">
+          <input id="url" name="url" placeholder="Url" value = ""
+                 class="form-control input-md">
+
+        </div>
+      </div>
+
       <!-- Button -->
       <div class="form-group">
         <label class="col-md-4 control-label" for="submit"></label>
@@ -85,35 +95,36 @@
 
   <script>
     $('#main_form').submit(function (e) {
-      e.preventDefault();
-      FacadeValidator.getInstance().addMethod(
-        "rangeNum", 
-        function (input, value) {
-          if (input !== undefined && Array.isArray(value) && value.length >=2){
-            input = parseInt(input);
-            return input >= value[0] && input <= value[1];
-          }
-        },
-        function (tagName, value) { 
-            if (Array.isArray(value) && value.length >= 2)
-              return "Please enter a value between " + value[0] +" and "+ value[1];
-            return "Invalid input";
-        }
-      );
-      FacadeValidator.getInstance().validate({
-        name: { min: 5},
-        email: { email: true },
-        email: { ipAddress: true},
-        username: {rangeNum: [5, 10]},
-        comfirmpassword: {equal: "#password"}
-      },
-        {
-          /**
-           * @param {*} errorDisplay: ['default','console','alert'}
-           */
-          errorDisplay: "default"
-        });
-      return false;
+        e.preventDefault();
+        FacadeValidator.getInstance().addMethod(
+            "rangeNum",
+            function (input, value) {
+                if (input !== undefined && Array.isArray(value) && value.length >= 2) {
+                    input = parseInt(input);
+                    return input >= value[0] && input <= value[1];
+                }
+            },
+            function (tagName, value) {
+                if (Array.isArray(value) && value.length >= 2)
+                    return "Please enter a value between " + value[0] + " and " + value[1];
+                return "Invalid input";
+            }
+        );
+        FacadeValidator.getInstance().validate({
+                name: {min: 5},
+                email: {email: true},
+                email: {ipAddress: true},
+                url: {url: true},
+                username: {rangeNum: [5, 10]},
+                comfirmpassword: {equal: "#password"}
+            },
+            {
+                /**
+                 * @param {*} errorDisplay: ['default','console','alert'}
+                 */
+                errorDisplay: "default"
+            });
+        return false;
 
     })
   </script>
