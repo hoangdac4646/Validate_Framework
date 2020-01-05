@@ -16,6 +16,7 @@ class FacadeValidator {
      * @param options: objects
      */
     validate(rules, options) {
+        this.resetMessageNotify();
         this.getMessFactory(options.errorDisplay);
         this.arrInvalid = [];
         $.each(rules, function (tagName, value) {
@@ -73,6 +74,12 @@ class FacadeValidator {
         this.message.add(this.messFactory.createIcon(util));
 
         this.message.add(this.messFactory.createText(util));
+    }
+
+    resetMessageNotify()
+    {
+        $('.message').remove();
+        this.message = new Message(this.messFactory);
     }
 
     initValidatorFactory() {

@@ -100,7 +100,7 @@
       FacadeValidator.getInstance().addMethod(
         "rangeNum", 
         function (input, value) {
-          if (input != undefined && Array.isArray(value) && value.length >=2){
+          if (input !== undefined && Array.isArray(value) && value.length >=2){
             input = parseInt(input);
             return input >= value[0] && input <= value[1];
           }
