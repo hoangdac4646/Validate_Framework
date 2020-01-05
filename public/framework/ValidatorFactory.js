@@ -9,13 +9,16 @@ class PrototypeValidatorFactory extends IValidatorFactory{
         super();
         this.listValidator = {
             "email": new EmailValidator(),
+            "equal": new EqualValidator(),
+            "ipAddress": new IpAddressValidator(),
+            "macAddress": new MacAddressValidator(),
+            "min": new MinValidator(),
+            "max": new MaxValidator(),
+            "number": new IsNumberValidator(),
             "minLength": new MinLenghtValidator(),
             "maxLength": new MaxLenghtValidator(),
-            "min": new MinValidator(),
-            "equal": new EqualValidator(),
-            "number": new EqualValidator(),
-            "required": new EqualValidator(),
-            "date": new EqualValidator(),
+            "time": new TimeValidator(),
+            "url": new UrlValidator(),
         }
     }
 
