@@ -6,7 +6,7 @@ class EqualValidator extends CommonValidator{
     createCheckFunc(){
         return function (str, value) { 
             var otherValue = $(value).val();
-            return str == otherValue;
+            return str === otherValue;
         }
     }
 

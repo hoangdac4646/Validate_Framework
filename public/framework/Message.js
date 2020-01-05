@@ -21,7 +21,6 @@ class Message {
 class MessageFactory{
     constructor() {
         console.log("constructor MessageFactory");
-        // initValidatorFactory();
     }
 
     createIcon(info)
@@ -78,7 +77,6 @@ class AlertMessFactory extends MessageFactory{
 
 class MessageElement{
     constructor(info) {
-        // initValidatorFactory();
         this.inputSelector = info.inputSelector;
     }
 
