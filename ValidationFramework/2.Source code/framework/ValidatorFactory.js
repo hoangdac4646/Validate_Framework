@@ -14,6 +14,7 @@ class PrototypeValidatorFactory extends IValidatorFactory{
             "macAddress": new MacAddressValidator(),
             "min": new MinValidator(),
             "max": new MaxValidator(),
+            "regex": new RegexValidator(),
             "number": new IsNumberValidator(),
             "minLength": new MinLenghtValidator(),
             "maxLength": new MaxLenghtValidator(),

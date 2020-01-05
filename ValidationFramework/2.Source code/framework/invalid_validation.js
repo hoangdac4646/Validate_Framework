@@ -7,7 +7,7 @@ document.getElementsByTagName('head')[0].appendChild(script);
 
 class FacadeValidator {
     constructor() {
-        console.log("constructor FacadeValidator");
+        console.log("Constructor FacadeValidator");
         this.validatorFactory = new PrototypeValidatorFactory();
     }
 
@@ -153,6 +153,7 @@ class PrototypeValidatorFactory extends IValidatorFactory{
             "min": new MinValidator(),
             "max": new MaxValidator(),
             "number": new IsNumberValidator(),
+            "regex": new RegexValidator(),
             "minLength": new MinLenghtValidator(),
             "maxLength": new MaxLenghtValidator(),
             "time": new TimeValidator(),
@@ -325,6 +326,25 @@ class IsNumberValidator extends CommonValidator{
     createMessageFunc(){
         return function (tagName, value) {
             return tagName + " must be a number";
+        }
+    }
+}
+
+class RegexValidator extends CommonValidator {
+    constructor(){
+        super();
+    }
+    
+    createCheckFunc(){
+        return function (str, value) { 
+            var regex = new RegExp(value);
+            return regex.test(str);
+        }
+    }
+
+    createMessageFunc(){
+        return function (tagName, value) {  
+            return tagName + " is invalid";
         }
     }
 }

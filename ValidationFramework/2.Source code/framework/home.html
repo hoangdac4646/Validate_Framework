@@ -135,7 +135,7 @@
             }
         );
         FacadeValidator.getInstance().validate({
-                name: {min: 5},
+                name: {min: 5, regex: /^s/},
                 email: {email: true},
                 ipaddress: {ipAddress: true},
                 url: {url: true},

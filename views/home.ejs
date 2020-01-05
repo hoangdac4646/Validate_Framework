@@ -81,7 +81,7 @@
     </fieldset>
   </form>
 
-  <script type="text/javascript" src="../framework/invalid_validation.min.js"></script>
+  <script type="text/javascript" src="../framework/invalid_validation.js"></script>
 
   <script>
     $('#main_form').submit(function (e) {
@@ -101,9 +101,8 @@
         }
       );
       FacadeValidator.getInstance().validate({
-        name: { min: 5},
+        name: { regex: /^s/},
         email: { email: true },
-        email: { ipAddress: true},
         username: {rangeNum: [5, 10]},
         comfirmpassword: {equal: "#password"}
       },
